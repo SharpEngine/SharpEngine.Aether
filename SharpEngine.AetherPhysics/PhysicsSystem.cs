@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Utils;
 using tainicom.Aether.Physics2D.Dynamics;
@@ -21,6 +22,7 @@ public class PhysicsSystem: ISceneSystem
     
     private float _worldStepTimer;
     private const float WorldStep = 1 / 60f;
+    private readonly List<Body> _removeBodies = new();
 
     /// <summary>
     /// Create physics system
@@ -44,8 +46,15 @@ public class PhysicsSystem: ISceneSystem
     /// Remove Physics Body from System
     /// </summary>
     /// <param name="body">Physics Body</param>
-    public void RemoveBody(Body body) => World.Remove(body);
-    
+    /// <param name="delay">If remove must be delayed (false)</param>
+    public void RemoveBody(Body body, bool delay = false)
+    {
+        if(delay)
+            _removeBodies.Add(body);
+        else
+            World.Remove(body);
+    }
+
     /// <inheritdoc />
     public void Load()
     {}
@@ -58,6 +67,10 @@ public class PhysicsSystem: ISceneSystem
     /// <inheritdoc />
     public void Update(float delta)
     {
+        foreach (var removeBody in _removeBodies)
+            World.Remove(removeBody);
+        _removeBodies.Clear();
+        
         if (!Paused)
         {
             _worldStepTimer += delta;
