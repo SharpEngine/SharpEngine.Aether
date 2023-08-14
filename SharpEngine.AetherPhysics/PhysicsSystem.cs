@@ -22,6 +22,10 @@ public class PhysicsSystem: ISceneSystem
     private float _worldStepTimer;
     private const float WorldStep = 1 / 60f;
 
+    /// <summary>
+    /// Create physics system
+    /// </summary>
+    /// <param name="gravity">Gravity (Vec2(0, 25))</param>
     public PhysicsSystem(Vec2? gravity = null)
     {
         var gravityFinal = gravity ?? new Vec2(0, 25);
@@ -35,6 +39,12 @@ public class PhysicsSystem: ISceneSystem
             }
         };
     }
+
+    /// <summary>
+    /// Remove Physics Body from System
+    /// </summary>
+    /// <param name="body">Physics Body</param>
+    public void RemoveBody(Body body) => World.Remove(body);
     
     /// <inheritdoc />
     public void Load()
