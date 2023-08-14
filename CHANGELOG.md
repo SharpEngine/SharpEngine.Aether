@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.0.2 - 14/08/2023
+[+] PhysicsSystem : delay param in RemoveBody
+
 ### V 1.0.1 - 14/08/2023
 [+] PhysicsSystem : RemoveBody
 
