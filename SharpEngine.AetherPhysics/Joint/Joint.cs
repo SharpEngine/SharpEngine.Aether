@@ -12,17 +12,17 @@ public abstract class Joint
     /// Target of Joint
     /// </summary>
     public Entity Target { get; set; }
-    
+
     /// <summary>
     /// Type of Joint
     /// </summary>
     public JointType Type { get; set; }
-    
+
     /// <summary>
     /// From position of Joint
     /// </summary>
     public Vec2 FromPosition { get; set; }
-    
+
     /// <summary>
     /// Target Position of Joint
     /// </summary>

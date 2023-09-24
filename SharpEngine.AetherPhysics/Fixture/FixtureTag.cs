@@ -9,7 +9,7 @@ public enum FixtureTag
     /// Fixture will ignore collisions
     /// </summary>
     IgnoreCollisions,
-    
+
     /// <summary>
     /// Normal Fixture
     /// </summary>

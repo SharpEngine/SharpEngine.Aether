@@ -9,12 +9,12 @@ public enum JointType
     /// Distance Joint
     /// </summary>
     Distance,
-    
+
     /// <summary>
     /// Revolute Joint
     /// </summary>
     Revolute,
-    
+
     /// <summary>
     /// Rope Joint
     /// </summary>

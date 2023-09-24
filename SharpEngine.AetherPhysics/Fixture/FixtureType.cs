@@ -9,7 +9,7 @@ public enum FixtureType
     /// Rectangle Fixture
     /// </summary>
     Rectangle,
-    
+
     /// <summary>
     /// Circle Fixture
     /// </summary>
