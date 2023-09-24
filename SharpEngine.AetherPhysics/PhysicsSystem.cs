@@ -8,18 +8,18 @@ namespace SharpEngine.AetherPhysics;
 /// <summary>
 /// Scene System which add physics World
 /// </summary>
-public class PhysicsSystem: ISceneSystem
+public class PhysicsSystem : ISceneSystem
 {
     /// <summary>
     /// Physic World
     /// </summary>
     public readonly World World;
-    
+
     /// <summary>
     /// If Physics System is Paused
     /// </summary>
     public bool Paused { get; set; }
-    
+
     private float _worldStepTimer;
     private const float WorldStep = 1 / 60f;
     private readonly List<Body> _removeBodies = new();
@@ -49,20 +49,17 @@ public class PhysicsSystem: ISceneSystem
     /// <param name="delay">If remove must be delayed (false)</param>
     public void RemoveBody(Body body, bool delay = false)
     {
-        if(delay)
+        if (delay)
             _removeBodies.Add(body);
         else
             World.Remove(body);
     }
 
     /// <inheritdoc />
-    public void Load()
-    {}
+    public void Load() { }
 
     /// <inheritdoc />
-    public void Unload()
-    {
-    }
+    public void Unload() { }
 
     /// <inheritdoc />
     public void Update(float delta)
@@ -70,7 +67,7 @@ public class PhysicsSystem: ISceneSystem
         foreach (var removeBody in _removeBodies)
             World.Remove(removeBody);
         _removeBodies.Clear();
-        
+
         if (!Paused)
         {
             _worldStepTimer += delta;
@@ -85,17 +82,11 @@ public class PhysicsSystem: ISceneSystem
     }
 
     /// <inheritdoc />
-    public void Draw()
-    {
-    }
+    public void Draw() { }
 
     /// <inheritdoc />
-    public void OpenScene()
-    {
-    }
+    public void OpenScene() { }
 
     /// <inheritdoc />
-    public void CloseScene()
-    {
-    }
+    public void CloseScene() { }
 }

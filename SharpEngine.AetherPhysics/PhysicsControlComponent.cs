@@ -9,7 +9,7 @@ namespace SharpEngine.AetherPhysics;
 /// <summary>
 /// Physics version of ControlComponent
 /// </summary>
-public class PhysicsControlComponent: ControlComponent
+public class PhysicsControlComponent : ControlComponent
 {
     private PhysicsComponent? _physicsComponent;
 
@@ -24,9 +24,9 @@ public class PhysicsControlComponent: ControlComponent
         int speed = 300,
         float jumpForce = 2f,
         bool useGamePad = false,
-        int gamePadIndex = 1) : base(controlType, speed, jumpForce, useGamePad, gamePadIndex)
-    {
-    }
+        int gamePadIndex = 1
+    )
+        : base(controlType, speed, jumpForce, useGamePad, gamePadIndex) { }
 
     /// <inheritdoc />
     public override void Load()
@@ -40,12 +40,15 @@ public class PhysicsControlComponent: ControlComponent
     public override void Update(float delta)
     {
         base.Update(delta);
-        
-        if(_physicsComponent == null) return;
 
-        _physicsComponent.SetLinearVelocity(ControlType == ControlType.ClassicJump
-            ? new Vec2(0, _physicsComponent.GetLinearVelocity().Y)
-            : Vec2.Zero);
+        if (_physicsComponent == null)
+            return;
+
+        _physicsComponent.SetLinearVelocity(
+            ControlType == ControlType.ClassicJump
+                ? new Vec2(0, _physicsComponent.GetLinearVelocity().Y)
+                : Vec2.Zero
+        );
 
         var posX = 0f;
         var posY = 0f;
@@ -64,8 +67,13 @@ public class PhysicsControlComponent: ControlComponent
                         posX++;
                 }
 
-                if (InputManager.IsKeyPressed(GetKey(ControlKey.Up)) ||
-                    (UseGamePad && InputManager.IsGamePadButtonPressed(GamePadIndex, GamePadButton.A)))
+                if (
+                    InputManager.IsKeyPressed(GetKey(ControlKey.Up))
+                    || (
+                        UseGamePad
+                        && InputManager.IsGamePadButtonPressed(GamePadIndex, GamePadButton.A)
+                    )
+                )
                 {
                     if (_physicsComponent.IsOnGround())
                     {
@@ -83,10 +91,16 @@ public class PhysicsControlComponent: ControlComponent
             Direction = jump ? new Vec2(posX, posY) : new Vec2(posX, posY).Normalized();
         }
 
-        if(!IsMoving) return;
+        if (!IsMoving)
+            return;
         var velocity = Direction * Speed;
-        _physicsComponent.SetLinearVelocity(ControlType == ControlType.ClassicJump
-            ? new Vec2(velocity.X, velocity.Y == 0 ? _physicsComponent.GetLinearVelocity().Y : velocity.Y)
-            : velocity);
+        _physicsComponent.SetLinearVelocity(
+            ControlType == ControlType.ClassicJump
+                ? new Vec2(
+                    velocity.X,
+                    velocity.Y == 0 ? _physicsComponent.GetLinearVelocity().Y : velocity.Y
+                )
+                : velocity
+        );
     }
 }

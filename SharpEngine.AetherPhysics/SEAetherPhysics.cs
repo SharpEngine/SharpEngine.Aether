@@ -15,7 +15,7 @@ public static class SEAetherPhysics
     /// <param name="vec">SharpEngine Vec2</param>
     /// <returns>Aether Physics Vector 2</returns>
     public static Vector2 ToAetherPhysics(this Vec2 vec) => new(vec.X, vec.Y);
-    
+
     /// <summary>
     /// Change Aether Physics Vector2 to SharpEngine Vec2
     /// </summary>
