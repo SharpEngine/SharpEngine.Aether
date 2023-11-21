@@ -1,8 +1,7 @@
-using System;
 using SharpEngine.Core.Component;
+using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
-using SharpEngine.Core.Utils.Input;
 
 namespace SharpEngine.AetherPhysics;
 

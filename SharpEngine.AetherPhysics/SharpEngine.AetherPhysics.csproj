@@ -24,8 +24,8 @@
     <None Include="../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SharpEngine.Core" Version="1.1.2" />
     <PackageReference Include="Aether.Physics2D" Version="2.0.0" />
+    <PackageReference Include="SharpEngine.Core" Version="1.6.0" />
   </ItemGroup>
   
   <!-- set HUSKY to 0 in CI\/CD disable this -->
