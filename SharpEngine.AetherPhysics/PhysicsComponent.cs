@@ -7,8 +7,8 @@ using SharpEngine.Core.Component;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
-using tainicom.Aether.Physics2D.Dynamics;
-using tainicom.Aether.Physics2D.Dynamics.Contacts;
+using nkast.Aether.Physics2D.Dynamics;
+using nkast.Aether.Physics2D.Dynamics.Contacts;
 
 namespace SharpEngine.AetherPhysics;
 
@@ -246,7 +246,7 @@ public class PhysicsComponent : Component
         // Create Fixtures
         foreach (var info in _fixtures)
         {
-            tainicom.Aether.Physics2D.Dynamics.Fixture fixture;
+            nkast.Aether.Physics2D.Dynamics.Fixture fixture;
             switch (info.Type)
             {
                 case FixtureType.Rectangle:
@@ -359,8 +359,8 @@ public class PhysicsComponent : Component
     }
 
     private bool OnCollision(
-        tainicom.Aether.Physics2D.Dynamics.Fixture sender,
-        tainicom.Aether.Physics2D.Dynamics.Fixture other,
+        nkast.Aether.Physics2D.Dynamics.Fixture sender,
+        nkast.Aether.Physics2D.Dynamics.Fixture other,
         Contact contact
     )
     {
@@ -387,8 +387,8 @@ public class PhysicsComponent : Component
     }
 
     private void OnSeparation(
-        tainicom.Aether.Physics2D.Dynamics.Fixture sender,
-        tainicom.Aether.Physics2D.Dynamics.Fixture other,
+        nkast.Aether.Physics2D.Dynamics.Fixture sender,
+        nkast.Aether.Physics2D.Dynamics.Fixture other,
         Contact contact
     )
     {

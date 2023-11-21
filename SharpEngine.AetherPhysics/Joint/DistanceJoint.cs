@@ -1,7 +1,7 @@
 using SharpEngine.Core.Entity;
 using SharpEngine.Core.Math;
-using tainicom.Aether.Physics2D.Dynamics;
-using DJoint = tainicom.Aether.Physics2D.Dynamics.Joints.DistanceJoint;
+using nkast.Aether.Physics2D.Dynamics;
+using DJoint = nkast.Aether.Physics2D.Dynamics.Joints.DistanceJoint;
 
 namespace SharpEngine.AetherPhysics.Joint;
 

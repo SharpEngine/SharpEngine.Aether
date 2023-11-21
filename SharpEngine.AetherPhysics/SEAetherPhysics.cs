@@ -1,6 +1,6 @@
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
-using tainicom.Aether.Physics2D.Common;
+using nkast.Aether.Physics2D.Common;
 
 namespace SharpEngine.AetherPhysics;
 

@@ -4,7 +4,7 @@ using SharpEngine.Core.Component;
 using SharpEngine.Core.Entity;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Utils;
-using tainicom.Aether.Physics2D.Dynamics;
+using nkast.Aether.Physics2D.Dynamics;
 
 namespace Testing;
 

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Utils;
-using tainicom.Aether.Physics2D.Dynamics;
+using nkast.Aether.Physics2D.Dynamics;
 
 namespace SharpEngine.AetherPhysics;
 
