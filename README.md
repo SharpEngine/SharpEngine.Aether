@@ -8,6 +8,6 @@ Aether Package of SharpEngine - C# 2D Game Engine
 
 ## Dependencies
 
-- Net7
+- Net8
 - SharpEngine.Core
 - Aether Physics
