@@ -22,7 +22,7 @@ public class PhysicsSystem : ISceneSystem
 
     private float _worldStepTimer;
     private const float WorldStep = 1 / 60f;
-    private readonly List<Body> _removeBodies = new();
+    private readonly List<Body> _removeBodies = [];
 
     /// <summary>
     /// Create physics system

@@ -8,30 +8,21 @@ namespace SharpEngine.AetherPhysics.Joint;
 /// <summary>
 /// Rope Joint
 /// </summary>
-public class RopeJoint : Joint
+/// <param name="target">Joint Target</param>
+/// <param name="fromPosition">Joint From Position</param>
+/// <param name="targetPosition">Joint Target Position</param>
+/// <param name="maxLength">Joint Max Length</param>
+public class RopeJoint(
+    Entity target,
+    Vec2? fromPosition = null,
+    Vec2? targetPosition = null,
+    float maxLength = -1
+    ) : Joint(target, JointType.Rope, fromPosition ?? Vec2.Zero, targetPosition ?? Vec2.Zero)
 {
     /// <summary>
     /// Max Length of Joint
     /// </summary>
-    public float MaxLength { get; set; }
-
-    /// <summary>
-    /// Create Rope Joint
-    /// </summary>
-    /// <param name="target">Joint Target</param>
-    /// <param name="fromPosition">Joint From Position</param>
-    /// <param name="targetPosition">Joint Target Position</param>
-    /// <param name="maxLength">Joint Max Length</param>
-    public RopeJoint(
-        Entity target,
-        Vec2? fromPosition = null,
-        Vec2? targetPosition = null,
-        float maxLength = -1
-    )
-        : base(target, JointType.Rope, fromPosition ?? Vec2.Zero, targetPosition ?? Vec2.Zero)
-    {
-        MaxLength = maxLength;
-    }
+    public float MaxLength { get; set; } = maxLength;
 
     internal RJoint ToAetherPhysics(Body from)
     {

@@ -8,24 +8,21 @@ namespace SharpEngine.AetherPhysics;
 /// <summary>
 /// Physics version of ControlComponent
 /// </summary>
-public class PhysicsControlComponent : ControlComponent
+/// <remarks>Create Physics Control Component</remarks>
+/// <param name="controlType">Control Type (FourDirection)</param>
+/// <param name="speed">Speed (300)</param>
+/// <param name="jumpForce">Jump Force (3)</param>
+/// <param name="useGamePad">Use Game Pad (false)</param>
+/// <param name="gamePadIndex">Game Pad Index (1)</param>
+public class PhysicsControlComponent(
+    ControlType controlType = ControlType.FourDirection,
+    int speed = 300,
+    float jumpForce = 2f,
+    bool useGamePad = false,
+    int gamePadIndex = 1
+    ) : ControlComponent(controlType, speed, jumpForce, useGamePad, gamePadIndex)
 {
     private PhysicsComponent? _physicsComponent;
-
-    /// <summary>Create Physics Control Component</summary>
-    /// <param name="controlType">Control Type (FourDirection)</param>
-    /// <param name="speed">Speed (300)</param>
-    /// <param name="jumpForce">Jump Force (3)</param>
-    /// <param name="useGamePad">Use Game Pad (false)</param>
-    /// <param name="gamePadIndex">Game Pad Index (1)</param>
-    public PhysicsControlComponent(
-        ControlType controlType = ControlType.FourDirection,
-        int speed = 300,
-        float jumpForce = 2f,
-        bool useGamePad = false,
-        int gamePadIndex = 1
-    )
-        : base(controlType, speed, jumpForce, useGamePad, gamePadIndex) { }
 
     /// <inheritdoc />
     public override void Load()

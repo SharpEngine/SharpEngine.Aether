@@ -15,7 +15,19 @@ namespace SharpEngine.AetherPhysics;
 /// <summary>
 /// Components which add physics
 /// </summary>
-public class PhysicsComponent : Component
+/// <remarks>
+/// Create PhysicsComponent
+/// </remarks>
+/// <param name="bodyType">Type of Body</param>
+/// <param name="ignoreGravity">Ignore Gravity</param>
+/// <param name="fixedRotation">Rotation fixed</param>
+/// <param name="debugDraw">Debug Draw</param>
+public class PhysicsComponent(
+    BodyType bodyType = BodyType.Dynamic,
+    bool ignoreGravity = false,
+    bool fixedRotation = false,
+    bool debugDraw = false
+    ) : Component
 {
     /// <summary>
     /// Body Physics
@@ -25,7 +37,7 @@ public class PhysicsComponent : Component
     /// <summary>
     /// Draw debug information
     /// </summary>
-    public bool DebugDraw { get; set; }
+    public bool DebugDraw { get; set; } = debugDraw;
 
     /// <summary>
     /// Event which be called when collision
@@ -37,60 +49,40 @@ public class PhysicsComponent : Component
     /// </summary>
     public EventHandler<PhysicsEventArgs>? SeparationCallback { get; set; }
 
-    private readonly BodyType _bodyType;
-    private readonly List<FixtureInfo> _fixtures = new();
-    private readonly List<Joint.Joint> _joints = new();
-    private readonly bool _fixedRotation;
-    private readonly bool _ignoreGravity;
-    private readonly List<List<object>> _debugDrawings = new();
-    private readonly List<Contact> _contacts = new();
+    private readonly BodyType _bodyType = bodyType;
+    private readonly List<FixtureInfo> _fixtures = [];
+    private readonly List<Joint.Joint> _joints = [];
+    private readonly bool _fixedRotation = fixedRotation;
+    private readonly bool _ignoreGravity = ignoreGravity;
+    private readonly List<List<object>> _debugDrawings = [];
+    private readonly List<Contact> _contacts = [];
 
     private TransformComponent? _transform;
-
-    /// <summary>
-    /// Create PhysicsComponent
-    /// </summary>
-    /// <param name="bodyType">Type of Body</param>
-    /// <param name="ignoreGravity">Ignore Gravity</param>
-    /// <param name="fixedRotation">Rotation fixed</param>
-    /// <param name="debugDraw">Debug Draw</param>
-    public PhysicsComponent(
-        BodyType bodyType = BodyType.Dynamic,
-        bool ignoreGravity = false,
-        bool fixedRotation = false,
-        bool debugDraw = false
-    )
-    {
-        _bodyType = bodyType;
-        _ignoreGravity = ignoreGravity;
-        _fixedRotation = fixedRotation;
-        DebugDraw = debugDraw;
-    }
 
     /// <summary>
     /// Return Position of Body
     /// </summary>
     /// <returns>Body Position</returns>
-    public Vec2 GetPosition() => new(Body.Position.X * 50, Body.Position.Y / 50);
+    public Vec2 GetPosition() => new(Body!.Position.X * 50, Body.Position.Y / 50);
 
     /// <summary>
     /// Define Position of Body
     /// </summary>
     /// <param name="position">Body Position</param>
-    public void SetPosition(Vec2 position) => Body.Position = (position * 0.02f).ToAetherPhysics();
+    public void SetPosition(Vec2 position) => Body!.Position = (position * 0.02f).ToAetherPhysics();
 
     /// <summary>
     /// Return Linear Velocity of Body
     /// </summary>
     /// <returns>Body Linear Velocity</returns>
-    public Vec2 GetLinearVelocity() => new(Body.LinearVelocity.X * 50, Body.LinearVelocity.Y * 50);
+    public Vec2 GetLinearVelocity() => new(Body!.LinearVelocity.X * 50, Body.LinearVelocity.Y * 50);
 
     /// <summary>
     /// Define Linear Velocity of Body
     /// </summary>
     /// <param name="velocity">Body Linear Velocity</param>
     public void SetLinearVelocity(Vec2 velocity) =>
-        Body.LinearVelocity = (velocity * 0.02f).ToAetherPhysics();
+        Body!.LinearVelocity = (velocity * 0.02f).ToAetherPhysics();
 
     /// <summary>
     /// Apply Impulse to Body
@@ -103,13 +95,13 @@ public class PhysicsComponent : Component
     /// Return Rotation of Body
     /// </summary>
     /// <returns>Body Rotation</returns>
-    public int GetRotation() => (int)(Body.Rotation * 180 / MathHelper.Pi);
+    public int GetRotation() => (int)(Body!.Rotation * 180 / MathHelper.Pi);
 
     /// <summary>
     /// Define Rotation of Body
     /// </summary>
     /// <param name="rotation">Body Rotation</param>
-    public void SetRotation(int rotation) => Body.Rotation = rotation * MathHelper.Pi / 180f;
+    public void SetRotation(int rotation) => Body!.Rotation = rotation * MathHelper.Pi / 180f;
 
     /// <summary>
     /// Add Rectangle Collision
@@ -139,7 +131,7 @@ public class PhysicsComponent : Component
             Offset = offset * 0.02f ?? Vec2.Zero,
             Tag = tag
         };
-        _debugDrawings.Add(new List<object> { "rectangle", size, offset ?? Vec2.Zero });
+        _debugDrawings.Add(["rectangle", size, offset ?? Vec2.Zero]);
         _fixtures.Add(fixture);
     }
 
@@ -171,7 +163,7 @@ public class PhysicsComponent : Component
             Offset = offset * 0.02f ?? Vec2.Zero,
             Tag = tag
         };
-        _debugDrawings.Add(new List<object> { "circle", radius, offset ?? Vec2.Zero });
+        _debugDrawings.Add(["circle", radius, offset ?? Vec2.Zero]);
         _fixtures.Add(fixture);
     }
 
