@@ -88,8 +88,7 @@ public class PhysicsComponent(
     /// Apply Impulse to Body
     /// </summary>
     /// <param name="impulse">Linear Impulse</param>
-    public void ApplyLinearImpulse(Vec2 impulse) =>
-        Body.ApplyLinearImpulse((impulse * 0.02f).ToAetherPhysics());
+    public void ApplyLinearImpulse(Vec2 impulse) => Body!.ApplyLinearImpulse((impulse * 0.02f).ToAetherPhysics());
 
     /// <summary>
     /// Return Rotation of Body
@@ -260,7 +259,7 @@ public class PhysicsComponent(
                     );
                     break;
                 default:
-                    throw new Exception($"Unknown Type of Fixture : {info.Type}");
+                    throw new ArgumentException($"Unknown Type of Fixture : {info.Type}");
             }
 
             fixture.Tag = info.Tag;
@@ -290,7 +289,7 @@ public class PhysicsComponent(
                         ?.World.Add(((RopeJoint)joint).ToAetherPhysics(Body));
                     break;
                 default:
-                    throw new Exception($"Unknown Type of Joint : {joint.Type}");
+                    throw new ArgumentException($"Unknown Type of Joint : {joint.Type}");
             }
         }
         _joints.Clear();

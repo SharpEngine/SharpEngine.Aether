@@ -1,3 +1,4 @@
+using SharpEngine.AetherPhysics;
 using SharpEngine.Core.Component;
 using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
@@ -23,6 +24,7 @@ public class PhysicsControlComponent(
     ) : ControlComponent(controlType, speed, jumpForce, useGamePad, gamePadIndex)
 {
     private PhysicsComponent? _physicsComponent;
+    private bool _jump;
 
     /// <inheritdoc />
     public override void Load()
@@ -45,58 +47,55 @@ public class PhysicsControlComponent(
                 ? new Vec2(0, _physicsComponent.GetLinearVelocity().Y)
                 : Vec2.Zero
         );
+        
+        _jump = false;
 
-        var posX = 0f;
-        var posY = 0f;
-        var jump = false;
-
-        switch (ControlType)
+        var move = ControlType switch
         {
-            case ControlType.ClassicJump:
-                if (UseGamePad && InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX) != 0)
-                    posX += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
-                else
-                {
-                    if (InputManager.IsKeyDown(GetKey(ControlKey.Left)))
-                        posX--;
-                    if (InputManager.IsKeyDown(GetKey(ControlKey.Right)))
-                        posX++;
-                }
+            ControlType.ClassicJump => GetJumpMovement(),
+            _ => Vec2.Zero
+        };
 
-                if (
-                    InputManager.IsKeyPressed(GetKey(ControlKey.Up))
-                    || (
-                        UseGamePad
-                        && InputManager.IsGamePadButtonPressed(GamePadIndex, GamePadButton.A)
-                    )
-                )
-                {
-                    if (_physicsComponent.IsOnGround())
-                    {
-                        posY -= JumpForce;
-                        jump = true;
-                    }
-                }
-
-                break;
-        }
-
-        if (posX != 0 || posY != 0)
+        if (!move.IsZero())
         {
             IsMoving = true;
-            Direction = jump ? new Vec2(posX, posY) : new Vec2(posX, posY).Normalized();
+            Direction = _jump ? move : move.Normalized();
         }
 
         if (!IsMoving)
             return;
         var velocity = Direction * Speed;
-        _physicsComponent.SetLinearVelocity(
-            ControlType == ControlType.ClassicJump
-                ? new Vec2(
-                    velocity.X,
-                    velocity.Y == 0 ? _physicsComponent.GetLinearVelocity().Y : velocity.Y
-                )
-                : velocity
-        );
+        if(ControlType == ControlType.ClassicJump)
+            _physicsComponent.SetLinearVelocity(new Vec2(velocity.X, velocity.Y == 0 ? _physicsComponent.GetLinearVelocity().Y : velocity.Y));
+        else
+            _physicsComponent.SetLinearVelocity(velocity);
+    }
+
+    private Vec2 GetJumpMovement()
+    {
+        var result = Vec2.Zero;
+        if (UseGamePad)
+            result.X += InputManager.GetGamePadAxis(GamePadIndex, GamePadAxis.LeftX);
+        else
+        {
+            if (InputManager.IsKeyDown(GetKey(ControlKey.Left)))
+                result.X--;
+            if (InputManager.IsKeyDown(GetKey(ControlKey.Right)))
+                result.X++;
+        }
+
+        if (
+            (InputManager.IsKeyPressed(GetKey(ControlKey.Up)) || ( UseGamePad && InputManager.IsGamePadButtonPressed(GamePadIndex, GamePadButton.A)))
+            && _physicsComponent!.IsOnGround()
+        )
+        {
+            if (_physicsComponent!.IsOnGround())
+            {
+                result.Y -= JumpForce;
+                _jump = true;
+            }
+        }
+
+        return result;
     }
 }

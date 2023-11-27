@@ -25,6 +25,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Aether.Physics2D" Version="2.0.0" />
-    <PackageReference Include="SharpEngine.Core" Version="1.7.1" />
+    <PackageReference Include="SharpEngine.Core" Version="1.7.2" />
   </ItemGroup>
 </Project>
