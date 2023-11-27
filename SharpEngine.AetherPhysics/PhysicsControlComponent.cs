@@ -89,11 +89,8 @@ public class PhysicsControlComponent(
             && _physicsComponent!.IsOnGround()
         )
         {
-            if (_physicsComponent!.IsOnGround())
-            {
-                result.Y -= JumpForce;
-                _jump = true;
-            }
+            result.Y -= JumpForce;
+            _jump = true;
         }
 
         return result;
