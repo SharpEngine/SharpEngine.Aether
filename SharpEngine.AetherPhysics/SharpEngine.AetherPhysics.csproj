@@ -8,13 +8,13 @@
     <Company>LavaPower</Company>
     <Copyright>Copyright (c) LavaPower 2021-2023</Copyright>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageProjectUrl>https://github.com/SharpEngine/SharpEngine.AetherPhysics</PackageProjectUrl>
     <PackageVersion>1.1.0</PackageVersion>
+    <PackageProjectUrl>https://github.com/SharpEngine/SharpEngine.Aether</PackageProjectUrl>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <EnablePackageValisation>true</EnablePackageValisation>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <RepositoryUrl>https://github.com/SharpEngine/SharpEngine.AetherPhysics</RepositoryUrl>
+    <RepositoryUrl>https://github.com/SharpEngine/SharpEngine.Aether</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageTags>SharpEngine,Game,Engine,AetherPhysics,Physics</PackageTags>
     <Nullable>enable</Nullable>
