@@ -209,13 +209,8 @@ public class PhysicsComponent(
         if (Entity == null || _transform == null)
             return;
 
-        var body = Entity.Scene
-            ?.GetSceneSystem<PhysicsSystem>()
-            ?.World.CreateBody(
-                (_transform.Position * 0.02f).ToAetherPhysics(),
-                MathHelper.ToRadians(_transform.Rotation),
-                _bodyType
-            );
+        var body = Entity.Scene?.GetSceneSystem<PhysicsSystem>()?
+            .CreateBody(Entity, _transform.Position * 0.02f, MathHelper.ToRadians(_transform.Rotation), _bodyType);
 
         if (body == null)
             return;

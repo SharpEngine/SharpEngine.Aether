@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Utils;
 using nkast.Aether.Physics2D.Dynamics;
+using SharpEngine.Core.Entity;
+using System;
 
 namespace SharpEngine.AetherPhysics;
 
@@ -20,6 +22,7 @@ public class PhysicsSystem : ISceneSystem
     /// </summary>
     public bool Paused { get; set; }
 
+    private readonly Dictionary<Body, Entity> _bodies = [];
     private float _worldStepTimer;
     private const float WorldStep = 1 / 60f;
     private readonly List<Body> _removeBodies = [];
@@ -43,6 +46,34 @@ public class PhysicsSystem : ISceneSystem
     }
 
     /// <summary>
+    /// Get Entity from Body
+    /// </summary>
+    /// <param name="body">Body</param>
+    /// <returns>Entity</returns>
+    /// <exception cref="ArgumentException">Throw if body doesn't exist in system</exception>
+    public Entity GetEntityForBody(Body body)
+    {
+        if(_bodies.TryGetValue(body, out var entity)) 
+            return entity;
+        throw new ArgumentException("Unknown body.");
+    }
+
+    /// <summary>
+    /// Create and add Physics Body to System
+    /// </summary>
+    /// <param name="entity">Entity attached</param>
+    /// <param name="position">Position</param>
+    /// <param name="rotation">Rotation</param>
+    /// <param name="bodyType">Type of Body</param>
+    /// <returns>Created Body</returns>
+    public Body CreateBody(Entity entity, Vec2 position, float rotation, BodyType bodyType)
+    {
+        var body = World.CreateBody(position.ToAetherPhysics(), rotation, bodyType);
+        _bodies.Add(body, entity);
+        return body;
+    }
+
+    /// <summary>
     /// Remove Physics Body from System
     /// </summary>
     /// <param name="body">Physics Body</param>
@@ -52,7 +83,10 @@ public class PhysicsSystem : ISceneSystem
         if (delay)
             _removeBodies.Add(body);
         else
+        {
             World.Remove(body);
+            _bodies.Remove(body);
+        }
     }
 
     /// <inheritdoc />
@@ -65,7 +99,10 @@ public class PhysicsSystem : ISceneSystem
     public void Update(float delta)
     {
         foreach (var removeBody in _removeBodies)
+        {
             World.Remove(removeBody);
+            _bodies.Remove(removeBody);
+        }
         _removeBodies.Clear();
 
         if (!Paused)
