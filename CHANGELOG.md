@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.2.1 - 10/12/2023
+[+] PhysicsSystem : CreateBody, GetEntityFromBody
+
 ### V 1.2.0 - 27/11/2023
 [.] SharpEngine.Core : 1.7.2<br/>
 [.] Refactor with SonarCloud
