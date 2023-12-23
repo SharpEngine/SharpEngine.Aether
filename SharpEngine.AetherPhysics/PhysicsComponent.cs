@@ -111,7 +111,7 @@ public class PhysicsComponent(
     /// <param name="restitution">Collision Restitution</param>
     /// <param name="friction">Collision Friction</param>
     /// <param name="tag">Collision Tag</param>
-    public void AddRectangleCollision(
+    public PhysicsComponent AddRectangleCollision(
         Vec2 size,
         Vec2? offset = null,
         float density = 1f,
@@ -132,6 +132,7 @@ public class PhysicsComponent(
         };
         _debugDrawings.Add(["rectangle", size, offset ?? Vec2.Zero]);
         _fixtures.Add(fixture);
+        return this;
     }
 
     /// <summary>
@@ -143,7 +144,7 @@ public class PhysicsComponent(
     /// <param name="restitution">Collision Restitution</param>
     /// <param name="friction">Collision Friction</param>
     /// <param name="tag">Collision Tag</param>
-    public void AddCircleCollision(
+    public PhysicsComponent AddCircleCollision(
         float radius,
         Vec2? offset = null,
         float density = 1f,
@@ -164,6 +165,7 @@ public class PhysicsComponent(
         };
         _debugDrawings.Add(["circle", radius, offset ?? Vec2.Zero]);
         _fixtures.Add(fixture);
+        return this;
     }
 
     /// <summary>
