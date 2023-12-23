@@ -63,7 +63,7 @@ public class PhysicsComponent(
     /// Return Position of Body
     /// </summary>
     /// <returns>Body Position</returns>
-    public Vec2 GetPosition() => new(Body!.Position.X * 50, Body.Position.Y / 50);
+    public Vec2 GetPosition() => new(Body!.Position.X * 50, Body.Position.Y * 50);
 
     /// <summary>
     /// Define Position of Body
