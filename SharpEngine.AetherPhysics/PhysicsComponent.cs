@@ -9,6 +9,7 @@ using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 using nkast.Aether.Physics2D.Dynamics;
 using nkast.Aether.Physics2D.Dynamics.Contacts;
+using SharpEngine.Core.Manager;
 
 namespace SharpEngine.AetherPhysics;
 
@@ -18,16 +19,7 @@ namespace SharpEngine.AetherPhysics;
 /// <remarks>
 /// Create PhysicsComponent
 /// </remarks>
-/// <param name="bodyType">Type of Body</param>
-/// <param name="ignoreGravity">Ignore Gravity</param>
-/// <param name="fixedRotation">Rotation fixed</param>
-/// <param name="debugDraw">Debug Draw</param>
-public class PhysicsComponent(
-    BodyType bodyType = BodyType.Dynamic,
-    bool ignoreGravity = false,
-    bool fixedRotation = false,
-    bool debugDraw = false
-    ) : Component
+public class PhysicsComponent : Component
 {
     /// <summary>
     /// Body Physics
@@ -37,8 +29,16 @@ public class PhysicsComponent(
     /// <summary>
     /// Draw debug information
     /// </summary>
-    public bool DebugDraw { get; set; } = debugDraw;
-
+    public bool DebugDraw {
+        get => _debugDraw;
+        set
+        {
+            if (value)
+                DebugManager.Log(LogLevel.LogWarning, "Debug Physics Draw doesn't take rotation into account.");
+            _debugDraw = value;
+        }
+    }
+    
     /// <summary>
     /// Event which be called when collision
     /// </summary>
@@ -49,15 +49,36 @@ public class PhysicsComponent(
     /// </summary>
     public EventHandler<PhysicsEventArgs>? SeparationCallback { get; set; }
 
-    private readonly BodyType _bodyType = bodyType;
+    private readonly BodyType _bodyType;
     private readonly List<FixtureInfo> _fixtures = [];
     private readonly List<Joint.Joint> _joints = [];
-    private readonly bool _fixedRotation = fixedRotation;
-    private readonly bool _ignoreGravity = ignoreGravity;
+    private readonly bool _fixedRotation;
+    private readonly bool _ignoreGravity;
     private readonly List<List<object>> _debugDrawings = [];
     private readonly List<Contact> _contacts = [];
+    private bool _debugDraw;
 
     private TransformComponent? _transform;
+
+    /// <param name="bodyType">Type of Body</param>
+    /// <param name="ignoreGravity">Ignore Gravity</param>
+    /// <param name="fixedRotation">Rotation fixed</param>
+    /// <param name="debugDraw">Debug Draw</param>
+    public PhysicsComponent(
+        BodyType bodyType = BodyType.Dynamic,
+        bool ignoreGravity = false,
+        bool fixedRotation = false,
+        bool debugDraw = false
+    )
+    {
+        _bodyType = bodyType;
+        _fixedRotation = fixedRotation;
+        _ignoreGravity = ignoreGravity;
+        _debugDraw = debugDraw;
+
+        if(_debugDraw)
+            DebugManager.Log(LogLevel.LogWarning, "Debug Physics Draw doesn't take rotation into account.");
+    }
 
     /// <summary>
     /// Return Position of Body
