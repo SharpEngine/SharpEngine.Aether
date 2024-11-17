@@ -23,7 +23,7 @@
     <None Include="../README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SharpEngine.Core" Version="1.7.2" />
     <PackageReference Include="Aether.Physics2D" Version="2.1.0" />
+    <PackageReference Include="SharpEngine.Core" Version="1.9.0" />
   </ItemGroup>
 </Project>
