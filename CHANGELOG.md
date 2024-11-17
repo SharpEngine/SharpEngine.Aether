@@ -7,6 +7,11 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.3.0 - 17/11/2024
+[.] Add warning log about rotation with debug draws<br/>
+[.] Update Aether.Physics2D to 2.1.0<br/>
+[.] Update SharpEngine.Core to 1.9.0
+
 ### V 1.2.2 - 23/12/2023
 [\~] PhysicsComponent : AddRectangleCollision and AddCircleCollision return component<br/>
 [#] PhysicsComponent : GetPosition returns wrong position
