@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.3.1 - 21/11/2024
+[#] Fix versions in DebugManager
+
 ### V 1.3.0 - 17/11/2024
 [.] Add warning log about rotation with debug draws<br/>
 [.] Update Aether.Physics2D to 2.1.0<br/>
