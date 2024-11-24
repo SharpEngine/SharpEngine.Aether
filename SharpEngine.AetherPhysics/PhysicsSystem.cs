@@ -4,6 +4,7 @@ using SharpEngine.Core.Utils;
 using nkast.Aether.Physics2D.Dynamics;
 using SharpEngine.Core.Entity;
 using System;
+using System.Linq;
 
 namespace SharpEngine.AetherPhysics;
 
@@ -57,6 +58,13 @@ public class PhysicsSystem : ISceneSystem
             return entity;
         throw new ArgumentException("Unknown body.");
     }
+
+    /// <summary>
+    /// Get Body from Entity
+    /// </summary>
+    /// <param name="entity">Entity</param>
+    /// <returns>Body</returns>
+    public Body GetBodyForEntity(Entity entity) => _bodies.FirstOrDefault(x => x.Value == entity).Key;
 
     /// <summary>
     /// Create and add Physics Body to System
