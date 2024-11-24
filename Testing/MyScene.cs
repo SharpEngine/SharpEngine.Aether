@@ -20,7 +20,7 @@ public class MyScene : Scene
         e1.AddComponent(
                 new PhysicsComponent(fixedRotation: true, ignoreGravity: true, debugDraw: true)
             )
-            .AddCircleCollision(50, restitution: 0f);
+            .AddCircleCollision(50, restitution: 0f, tag: SharpEngine.AetherPhysics.Fixture.FixtureTag.IgnoreCollisions);
         e1.AddComponent(new PhysicsControlComponent(speed: 300));
         AddEntity(e1);
 
