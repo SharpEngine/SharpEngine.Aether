@@ -315,8 +315,8 @@ public class PhysicsComponent : Component
         if (_transform == null)
             return;
 
-        _transform.Position = (Body.Position * 50f).ToSharpEngine();
-        _transform.Rotation = (int)MathHelper.ToDegrees(Body.Rotation);
+        _transform.LocalPosition = (Body.Position * 50f).ToSharpEngine();
+        _transform.LocalRotation = (int)MathHelper.ToDegrees(Body.Rotation);
     }
 
     /// <inheritdoc />
