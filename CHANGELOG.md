@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.4.0 - 11/01/2025
+[.] Update SharpEngine.Core to 2.0.0
+
 ### V 1.3.2 - 24/11/2024
 [+] PhysicsSystem : GetBodyForEntity<br/>
 [.] Update SharpEngine.Core to 1.9.2
