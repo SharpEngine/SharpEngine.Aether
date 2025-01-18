@@ -85,7 +85,7 @@ public class PhysicsControlComponent(
         }
 
         if (
-            (InputManager.IsKeyPressed(GetKey(ControlKey.Up)) || ( UseGamePad && InputManager.IsGamePadButtonPressed(GamePadIndex, GamePadButton.A)))
+            (InputManager.IsKeyDown(GetKey(ControlKey.Up)) || ( UseGamePad && InputManager.IsGamePadButtonDown(GamePadIndex, GamePadButton.A)))
             && _physicsComponent!.IsOnGround()
         )
         {
