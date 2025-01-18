@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.4.1 - 18/01/2025
+[\~] PhysicsControlComponent : Replace pressed keys and buttons by down keys and buttons
+
 ### V 1.4.0 - 11/01/2025
 [.] Update SharpEngine.Core to 2.0.0
 
