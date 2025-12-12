@@ -7,6 +7,11 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.5.0 - 12/12/2025
+[.] Update Aether.Physics2D to 2.2.0<br/>
+[.] Update SharpEngine.Core to 2.4.0<br/>
+[.] Net 10
+
 ### V 1.4.1 - 18/01/2025
 [\~] PhysicsControlComponent : Replace pressed keys and buttons by down keys and buttons
 

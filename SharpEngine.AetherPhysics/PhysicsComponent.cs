@@ -141,6 +141,8 @@ public class PhysicsComponent : Component
         FixtureTag tag = FixtureTag.Normal
     )
     {
+        offset ??= Vec2.Zero;
+
         var fixture = new FixtureInfo
         {
             Density = density,
@@ -174,6 +176,8 @@ public class PhysicsComponent : Component
         FixtureTag tag = FixtureTag.Normal
     )
     {
+        offset ??= Vec2.Zero;
+
         var fixture = new FixtureInfo
         {
             Density = density,
@@ -259,11 +263,10 @@ public class PhysicsComponent : Component
             switch (info.Type)
             {
                 case FixtureType.Rectangle:
-                    var size = info.Parameter as Vec2?;
-                    Debug.Assert(size != null, nameof(size) + " != null");
+                    var size = info.Parameter as Vec2;
                     fixture = Body.CreateRectangle(
-                        size.Value.X,
-                        size.Value.Y,
+                        size!.X,
+                        size.Y,
                         info.Density,
                         info.Offset.ToAetherPhysics()
                     );
