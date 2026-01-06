@@ -33,10 +33,10 @@ jobs:
       run: dotnet restore
       
     - name: Build
-      run: dotnet build SharpEngine.Aether/SharpEngine.Aether.csproj -c Release
+      run: dotnet build SharpEngine.AetherPhysics/SharpEngine.AetherPhysics.csproj -c Release
 
     - name: Pack Nuget
-      run: dotnet pack SharpEngine.Aether/SharpEngine.Aether.csproj -c Release --no-build --output ${{ env.NuGetDirectory }}
+      run: dotnet pack SharpEngine.AetherPhysics/SharpEngine.AetherPhysics.csproj -c Release --no-build --output ${{ env.NuGetDirectory }}
     
     - uses: actions/upload-artifact@v4
       with:
