@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
+using JetBrains.Annotations;
 using SharpEngine.AetherPhysics.Fixture;
 using SharpEngine.AetherPhysics.Joint;
 using SharpEngine.Core.Component;
@@ -11,42 +11,47 @@ using nkast.Aether.Physics2D.Dynamics;
 using nkast.Aether.Physics2D.Dynamics.Contacts;
 using SharpEngine.Core.Manager;
 
-namespace SharpEngine.AetherPhysics;
+namespace SharpEngine.AetherPhysics.Component;
 
 /// <summary>
 /// Components which add physics
 /// </summary>
 /// <remarks>
-/// Create PhysicsComponent
+/// Create a PhysicsComponent
 /// </remarks>
-public class PhysicsComponent : Component
+[UsedImplicitly]
+public class PhysicsComponent : Core.Component.Component
 {
     /// <summary>
     /// Body Physics
     /// </summary>
+    [UsedImplicitly]
     public Body? Body { get; set; }
 
     /// <summary>
     /// Draw debug information
     /// </summary>
+    [UsedImplicitly]
     public bool DebugDraw {
-        get => _debugDraw;
+        get;
         set
         {
             if (value)
-                DebugManager.Log(LogLevel.LogWarning, "Debug Physics Draw doesn't take rotation into account.");
-            _debugDraw = value;
+                DebugManager.Log(LogLevel.Warning, "Debug Physics Draw doesn't take rotation into account.");
+            field = value;
         }
     }
     
     /// <summary>
     /// Event which be called when collision
     /// </summary>
+    [UsedImplicitly]
     public EventHandler<PhysicsEventArgs>? CollisionCallback { get; set; }
 
     /// <summary>
     /// Event which be called when separation
     /// </summary>
+    [UsedImplicitly]
     public EventHandler<PhysicsEventArgs>? SeparationCallback { get; set; }
 
     private readonly BodyType _bodyType;
@@ -56,7 +61,6 @@ public class PhysicsComponent : Component
     private readonly bool _ignoreGravity;
     private readonly List<List<object>> _debugDrawings = [];
     private readonly List<Contact> _contacts = [];
-    private bool _debugDraw;
 
     private TransformComponent? _transform;
 
@@ -74,22 +78,21 @@ public class PhysicsComponent : Component
         _bodyType = bodyType;
         _fixedRotation = fixedRotation;
         _ignoreGravity = ignoreGravity;
-        _debugDraw = debugDraw;
-
-        if(_debugDraw)
-            DebugManager.Log(LogLevel.LogWarning, "Debug Physics Draw doesn't take rotation into account.");
+        DebugDraw = debugDraw;
     }
 
     /// <summary>
     /// Return Position of Body
     /// </summary>
     /// <returns>Body Position</returns>
+    [UsedImplicitly]
     public Vec2 GetPosition() => new(Body!.Position.X * 50, Body.Position.Y * 50);
 
     /// <summary>
     /// Define Position of Body
     /// </summary>
     /// <param name="position">Body Position</param>
+    [UsedImplicitly]
     public void SetPosition(Vec2 position) => Body!.Position = (position * 0.02f).ToAetherPhysics();
 
     /// <summary>
@@ -109,19 +112,22 @@ public class PhysicsComponent : Component
     /// Apply Impulse to Body
     /// </summary>
     /// <param name="impulse">Linear Impulse</param>
+    [UsedImplicitly]
     public void ApplyLinearImpulse(Vec2 impulse) => Body!.ApplyLinearImpulse((impulse * 0.02f).ToAetherPhysics());
 
     /// <summary>
     /// Return Rotation of Body
     /// </summary>
     /// <returns>Body Rotation</returns>
-    public int GetRotation() => (int)(Body!.Rotation * 180 / MathHelper.Pi);
+    [UsedImplicitly]
+    public float GetRotation() => Body!.Rotation * 180 / MathHelper.Pi;
 
     /// <summary>
     /// Define Rotation of Body
     /// </summary>
     /// <param name="rotation">Body Rotation</param>
-    public void SetRotation(int rotation) => Body!.Rotation = rotation * MathHelper.Pi / 180f;
+    [UsedImplicitly]
+    public void SetRotation(float rotation) => Body!.Rotation = rotation * MathHelper.Pi / 180f;
 
     /// <summary>
     /// Add Rectangle Collision
@@ -132,6 +138,7 @@ public class PhysicsComponent : Component
     /// <param name="restitution">Collision Restitution</param>
     /// <param name="friction">Collision Friction</param>
     /// <param name="tag">Collision Tag</param>
+    [UsedImplicitly]
     public PhysicsComponent AddRectangleCollision(
         Vec2 size,
         Vec2? offset = null,
@@ -150,10 +157,10 @@ public class PhysicsComponent : Component
             Friction = friction,
             Type = FixtureType.Rectangle,
             Parameter = size * 0.02f,
-            Offset = offset * 0.02f ?? Vec2.Zero,
+            Offset = offset * 0.02f,
             Tag = tag
         };
-        _debugDrawings.Add(["rectangle", size, offset ?? Vec2.Zero]);
+        _debugDrawings.Add(["rectangle", size, offset]);
         _fixtures.Add(fixture);
         return this;
     }
@@ -167,6 +174,7 @@ public class PhysicsComponent : Component
     /// <param name="restitution">Collision Restitution</param>
     /// <param name="friction">Collision Friction</param>
     /// <param name="tag">Collision Tag</param>
+    [UsedImplicitly]
     public PhysicsComponent AddCircleCollision(
         float radius,
         Vec2? offset = null,
@@ -185,10 +193,10 @@ public class PhysicsComponent : Component
             Friction = friction,
             Type = FixtureType.Circle,
             Parameter = radius * 0.02f,
-            Offset = offset * 0.02f ?? Vec2.Zero,
+            Offset = offset * 0.02f,
             Tag = tag
         };
-        _debugDrawings.Add(["circle", radius, offset ?? Vec2.Zero]);
+        _debugDrawings.Add(["circle", radius, offset]);
         _fixtures.Add(fixture);
         return this;
     }
@@ -196,7 +204,7 @@ public class PhysicsComponent : Component
     /// <summary>
     /// Return if entity is on ground
     /// </summary>
-    /// <returns>If is on ground</returns>
+    /// <returns>If is on the ground</returns>
     public bool IsOnGround()
     {
         if (GetLinearVelocity().Y != 0)
@@ -214,11 +222,13 @@ public class PhysicsComponent : Component
     /// Add joint
     /// </summary>
     /// <param name="joint">Joint</param>
+    [UsedImplicitly]
     public void AddJoint(Joint.Joint joint) => _joints.Add(joint);
 
     /// <summary>
     /// Remove Body
     /// </summary>
+    [UsedImplicitly]
     public void RemoveBody()
     {
         if (Body != null)
@@ -330,42 +340,41 @@ public class PhysicsComponent : Component
         if (_transform == null)
             return;
 
-        if (DebugDraw)
+        if (!DebugDraw) return;
+        
+        foreach (var drawing in _debugDrawings)
         {
-            foreach (var drawing in _debugDrawings)
+            switch ((string)drawing[0])
             {
-                switch ((string)drawing[0])
-                {
-                    case "rectangle":
-                        var size = (Vec2)drawing[1];
-                        var offset = (Vec2)drawing[2];
-                        var rect = new Rect(
-                            _transform.Position.X + offset.X - size.X / 2,
-                            _transform.Position.Y + offset.Y - size.Y / 2,
-                            size.X,
-                            size.Y
-                        );
-                        SERender.DrawRectangleLines(
-                            rect,
-                            2,
-                            Color.DarkRed,
-                            InstructionSource.Entity,
-                            int.MaxValue
-                        );
-                        break;
-                    case "circle":
-                        var radius = (float)drawing[1];
-                        var offsetCirc = (Vec2)drawing[2];
-                        SERender.DrawCircleLines(
-                            (int)(_transform.Position.X + offsetCirc.X),
-                            (int)(_transform.Position.Y + offsetCirc.Y),
-                            radius,
-                            Color.DarkRed,
-                            InstructionSource.Entity,
-                            int.MaxValue
-                        );
-                        break;
-                }
+                case "rectangle":
+                    var size = (Vec2)drawing[1];
+                    var offset = (Vec2)drawing[2];
+                    var rect = new Rect(
+                        _transform.Position.X + offset.X - size.X / 2,
+                        _transform.Position.Y + offset.Y - size.Y / 2,
+                        size.X,
+                        size.Y
+                    );
+                    SERender.DrawRectangleLines(
+                        rect,
+                        2,
+                        Color.DarkRed,
+                        InstructionSource.Entity,
+                        int.MaxValue
+                    );
+                    break;
+                case "circle":
+                    var radius = (float)drawing[1];
+                    var offsetCirc = (Vec2)drawing[2];
+                    SERender.DrawCircleLines(
+                        (int)(_transform.Position.X + offsetCirc.X),
+                        (int)(_transform.Position.Y + offsetCirc.Y),
+                        radius,
+                        Color.DarkRed,
+                        InstructionSource.Entity,
+                        int.MaxValue
+                    );
+                    break;
             }
         }
     }

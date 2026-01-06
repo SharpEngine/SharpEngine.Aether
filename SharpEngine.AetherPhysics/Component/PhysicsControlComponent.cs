@@ -1,10 +1,10 @@
-using SharpEngine.AetherPhysics;
+using JetBrains.Annotations;
 using SharpEngine.Core.Component;
 using SharpEngine.Core.Input;
 using SharpEngine.Core.Manager;
 using SharpEngine.Core.Math;
 
-namespace SharpEngine.AetherPhysics;
+namespace SharpEngine.AetherPhysics.Component;
 
 /// <summary>
 /// Physics version of ControlComponent
@@ -15,6 +15,7 @@ namespace SharpEngine.AetherPhysics;
 /// <param name="jumpForce">Jump Force (3)</param>
 /// <param name="useGamePad">Use Game Pad (false)</param>
 /// <param name="gamePadIndex">Game Pad Index (1)</param>
+[UsedImplicitly]
 public class PhysicsControlComponent(
     ControlType controlType = ControlType.FourDirection,
     int speed = 300,
@@ -65,10 +66,9 @@ public class PhysicsControlComponent(
         if (!IsMoving)
             return;
         var velocity = Direction * Speed;
-        if(ControlType == ControlType.ClassicJump)
-            _physicsComponent.SetLinearVelocity(new Vec2(velocity.X, velocity.Y == 0 ? _physicsComponent.GetLinearVelocity().Y : velocity.Y));
-        else
-            _physicsComponent.SetLinearVelocity(velocity);
+        _physicsComponent.SetLinearVelocity(ControlType == ControlType.ClassicJump
+            ? new Vec2(velocity.X, velocity.Y == 0 ? _physicsComponent.GetLinearVelocity().Y : velocity.Y)
+            : velocity);
     }
 
     private Vec2 GetJumpMovement()
@@ -84,14 +84,12 @@ public class PhysicsControlComponent(
                 result.X++;
         }
 
-        if (
-            (InputManager.IsKeyDown(GetKey(ControlKey.Up)) || ( UseGamePad && InputManager.IsGamePadButtonDown(GamePadIndex, GamePadButton.A)))
-            && _physicsComponent!.IsOnGround()
-        )
-        {
-            result.Y -= JumpForce;
-            _jump = true;
-        }
+        if ((!InputManager.IsKeyDown(GetKey(ControlKey.Up)) &&
+             (!UseGamePad || !InputManager.IsGamePadButtonDown(GamePadIndex, GamePadButton.A)))
+            || !_physicsComponent!.IsOnGround()) return result;
+        
+        result.Y -= JumpForce;
+        _jump = true;
 
         return result;
     }
