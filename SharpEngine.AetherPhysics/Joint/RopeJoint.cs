@@ -1,7 +1,9 @@
+using JetBrains.Annotations;
 using SharpEngine.Core.Entity;
 using SharpEngine.Core.Math;
 using nkast.Aether.Physics2D.Dynamics;
 using RJoint = nkast.Aether.Physics2D.Dynamics.Joints.RopeJoint;
+using SharpEngine.AetherPhysics.Component;
 
 namespace SharpEngine.AetherPhysics.Joint;
 
@@ -12,6 +14,7 @@ namespace SharpEngine.AetherPhysics.Joint;
 /// <param name="fromPosition">Joint From Position</param>
 /// <param name="targetPosition">Joint Target Position</param>
 /// <param name="maxLength">Joint Max Length</param>
+[UsedImplicitly]
 public class RopeJoint(
     Entity target,
     Vec2? fromPosition = null,
@@ -22,6 +25,7 @@ public class RopeJoint(
     /// <summary>
     /// Max Length of Joint
     /// </summary>
+    [UsedImplicitly]
     public float MaxLength { get; set; } = maxLength;
 
     internal RJoint ToAetherPhysics(Body from)

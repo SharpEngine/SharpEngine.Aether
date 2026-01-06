@@ -1,8 +1,5 @@
-﻿using ImGuiNET;
-using SharpEngine.AetherPhysics;
+﻿using SharpEngine.AetherPhysics;
 using SharpEngine.Core;
-using SharpEngine.Core.Manager;
-using SharpEngine.Core.Renderer;
 using SharpEngine.Core.Utils;
 
 namespace Testing;

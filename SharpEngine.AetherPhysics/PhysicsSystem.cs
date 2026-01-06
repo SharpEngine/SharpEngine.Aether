@@ -5,11 +5,12 @@ using nkast.Aether.Physics2D.Dynamics;
 using SharpEngine.Core.Entity;
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 
 namespace SharpEngine.AetherPhysics;
 
 /// <summary>
-/// Scene System which add physics World
+/// Scene System that adds physics World
 /// </summary>
 public class PhysicsSystem : ISceneSystem
 {
@@ -21,6 +22,7 @@ public class PhysicsSystem : ISceneSystem
     /// <summary>
     /// If Physics System is Paused
     /// </summary>
+    [UsedImplicitly]
     public bool Paused { get; set; }
 
     private readonly Dictionary<Body, Entity> _bodies = [];
@@ -29,7 +31,7 @@ public class PhysicsSystem : ISceneSystem
     private readonly List<Body> _removeBodies = [];
 
     /// <summary>
-    /// Create physics system
+    /// Create a physics system
     /// </summary>
     /// <param name="gravity">Gravity (Vec2(0, 25))</param>
     public PhysicsSystem(Vec2? gravity = null)
@@ -51,19 +53,16 @@ public class PhysicsSystem : ISceneSystem
     /// </summary>
     /// <param name="body">Body</param>
     /// <returns>Entity</returns>
-    /// <exception cref="ArgumentException">Throw if body doesn't exist in system</exception>
-    public Entity GetEntityForBody(Body body)
-    {
-        if(_bodies.TryGetValue(body, out var entity)) 
-            return entity;
-        throw new ArgumentException("Unknown body.");
-    }
+    /// <exception cref="ArgumentException">Throw if body doesn't exist in a system</exception>
+    [UsedImplicitly]
+    public Entity GetEntityForBody(Body body) => _bodies.TryGetValue(body, out var entity) ? entity : throw new ArgumentException("Unknown body.");
 
     /// <summary>
     /// Get Body from Entity
     /// </summary>
     /// <param name="entity">Entity</param>
     /// <returns>Body</returns>
+    [UsedImplicitly]
     public Body GetBodyForEntity(Entity entity) => _bodies.FirstOrDefault(x => x.Value == entity).Key;
 
     /// <summary>
@@ -86,6 +85,7 @@ public class PhysicsSystem : ISceneSystem
     /// </summary>
     /// <param name="body">Physics Body</param>
     /// <param name="delay">If remove must be delayed (false)</param>
+    [UsedImplicitly]
     public void RemoveBody(Body body, bool delay = false)
     {
         if (delay)
@@ -113,17 +113,16 @@ public class PhysicsSystem : ISceneSystem
         }
         _removeBodies.Clear();
 
-        if (!Paused)
-        {
-            _worldStepTimer += delta;
+        if (Paused) return;
+        
+        _worldStepTimer += delta;
 
-            while (_worldStepTimer >= WorldStep)
-            {
-                World.Step(WorldStep);
-                _worldStepTimer -= WorldStep;
-            }
-            World.ClearForces();
+        while (_worldStepTimer >= WorldStep)
+        {
+            World.Step(WorldStep);
+            _worldStepTimer -= WorldStep;
         }
+        World.ClearForces();
     }
 
     /// <inheritdoc />

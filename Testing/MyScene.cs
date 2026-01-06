@@ -5,6 +5,7 @@ using SharpEngine.Core.Entity;
 using SharpEngine.Core.Math;
 using SharpEngine.Core.Utils;
 using nkast.Aether.Physics2D.Dynamics;
+using SharpEngine.AetherPhysics.Component;
 
 namespace Testing;
 
@@ -33,6 +34,7 @@ public class MyScene : Scene
                 e2.AddComponent(new RectComponent(Color.Red, new Vec2(50)));
                 e2.AddComponent(new PhysicsComponent(BodyType.Dynamic, true, false, true))
                     .AddRectangleCollision(new Vec2(50));
+                e2.AddComponent(new PhysicsAutoComponent(new Vec2(10, 10), 20));
                 AddEntity(e2);
             }
         }

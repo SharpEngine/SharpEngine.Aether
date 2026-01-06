@@ -1,7 +1,9 @@
+using JetBrains.Annotations;
 using SharpEngine.Core.Entity;
 using SharpEngine.Core.Math;
 using nkast.Aether.Physics2D.Dynamics;
 using DJoint = nkast.Aether.Physics2D.Dynamics.Joints.DistanceJoint;
+using SharpEngine.AetherPhysics.Component;
 
 namespace SharpEngine.AetherPhysics.Joint;
 
@@ -14,6 +16,7 @@ namespace SharpEngine.AetherPhysics.Joint;
 /// <param name="length">Joint Length</param>
 /// <param name="frequency">Joint Frequency</param>
 /// <param name="dampingRatio">Joint Damping Ratio</param>
+[UsedImplicitly]
 public class DistanceJoint(
     Entity target,
     Vec2? fromPosition = null,
@@ -26,16 +29,19 @@ public class DistanceJoint(
     /// <summary>
     /// Length of Joint
     /// </summary>
+    [UsedImplicitly]
     public float Length { get; set; } = length;
 
     /// <summary>
     /// Frequency of Joint
     /// </summary>
+    [UsedImplicitly]
     public float Frequency { get; set; } = frequency;
 
     /// <summary>
     /// Damping Ratio of Joint
     /// </summary>
+    [UsedImplicitly]
     public float DampingRatio { get; set; } = dampingRatio;
 
     internal DJoint ToAetherPhysics(Body from)

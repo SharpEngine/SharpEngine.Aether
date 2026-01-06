@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using SharpEngine.Core.Entity;
 using SharpEngine.Core.Math;
 
@@ -11,21 +12,25 @@ public abstract class Joint
     /// <summary>
     /// Target of Joint
     /// </summary>
+    [UsedImplicitly]
     public Entity Target { get; set; }
 
     /// <summary>
     /// Type of Joint
     /// </summary>
+    [UsedImplicitly]
     public JointType Type { get; set; }
 
     /// <summary>
     /// From position of Joint
     /// </summary>
+    [UsedImplicitly]
     public Vec2 FromPosition { get; set; }
 
     /// <summary>
     /// Target Position of Joint
     /// </summary>
+    [UsedImplicitly]
     public Vec2 TargetPosition { get; set; }
 
     /// <summary>

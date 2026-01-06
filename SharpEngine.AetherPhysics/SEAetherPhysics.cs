@@ -7,6 +7,7 @@ namespace SharpEngine.AetherPhysics;
 /// <summary>
 /// Static class with extensions and add version functions
 /// </summary>
+// ReSharper disable once InconsistentNaming
 public static class SEAetherPhysics
 {
     /// <summary>
