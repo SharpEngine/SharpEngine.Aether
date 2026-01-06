@@ -30,6 +30,6 @@ public static class SEAetherPhysics
     public static void AddVersions()
     {
         DebugManager.Versions.Add("Aether.Physics2D", "2.2.0");
-        DebugManager.Versions.Add("SharpEngine.AetherPhysics", "1.5.0");
+        DebugManager.Versions.Add("SharpEngine.AetherPhysics", "1.6.0");
     }
 }
