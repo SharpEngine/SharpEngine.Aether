@@ -7,6 +7,9 @@
 [#] Bug Fixes<br>
 [.] Others
 
+### V 1.6.1 - 06/01/2025
+[.] Update SharpEngine.Core to 2.5.1
+
 ### V 1.6.0 - 06/01/2025
 [+] PhysicsAutoComponent<br/>
 [\~] PhysicsComponent: SetRotation now takes a float instead of an int<br/>
